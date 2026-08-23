@@ -52,7 +52,7 @@ agrinexus:
     secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
     expiration-ms: ${JWT_EXPIRATION:86400000} # 24 Hours
   cors:
-    allowed-origins: ${FRONTEND_URL:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173}
+    allowed-origins: ${FRONTEND_URL:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,https://ksetravya.onrender.com}
   upload:
     dir: ${UPLOAD_DIR:uploads/chat}
     max-image-size-bytes: 10485760 # 10 MB

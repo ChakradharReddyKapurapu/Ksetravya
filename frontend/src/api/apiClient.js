@@ -3,7 +3,7 @@
  * Wraps browser fetch with automatic JWT Bearer token authentication and uniform error handling.
  */
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://ksetravya.onrender.com/api';
 
 export const getAuthToken = () => {
   try {

@@ -29,13 +29,17 @@ class WebSocketService {
       return;
     }
 
-    this.token = jwtToken || localStorage.getItem('token');
+    this.token = jwtToken || localStorage.getItem('agri_nexus_jwt_token') || localStorage.getItem('token');
     if (!this.token) {
       this._notifyStatus('OFFLINE');
       return;
     }
 
-    const wsUrl = `${this.baseUrl}//${this.wsHost}/ws`;
+    const targetApi = import.meta.env.VITE_API_URL || 'https://ksetravya.onrender.com/api';
+    const isSecure = targetApi.startsWith('https:');
+    const wsScheme = isSecure ? 'wss:' : 'ws:';
+    const hostDomain = targetApi.replace(/^https?:\/\//, '').replace(/\/api\/?$/, '');
+    const wsUrl = `${wsScheme}//${hostDomain}/ws`;
     this._notifyStatus(this.reconnectAttempts > 0 ? 'RECONNECTING' : 'CONNECTING');
 
     try {

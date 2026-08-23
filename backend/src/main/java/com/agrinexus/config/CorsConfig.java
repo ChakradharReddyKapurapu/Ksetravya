@@ -25,7 +25,19 @@ public class CorsConfig {
                 .filter(s -> !s.isEmpty())
                 .toList();
 
-        configuration.setAllowedOrigins(origins);
+        if (origins.contains("*")) {
+            configuration.addAllowedOriginPattern("*");
+        } else {
+            for (String origin : origins) {
+                configuration.addAllowedOriginPattern(origin);
+            }
+            configuration.addAllowedOriginPattern("http://localhost:*");
+            configuration.addAllowedOriginPattern("http://127.0.0.1:*");
+            configuration.addAllowedOriginPattern("https://*.onrender.com");
+            configuration.addAllowedOriginPattern("https://*.vercel.app");
+            configuration.addAllowedOriginPattern("https://*.netlify.app");
+        }
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Link", "X-Total-Count"));
