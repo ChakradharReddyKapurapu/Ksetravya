@@ -9,14 +9,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/health")
 public class HealthController {
 
-    @GetMapping
+    @GetMapping({"/", "/api/health"})
     public ResponseEntity<Map<String, String>> checkHealth() {
         Map<String, String> response = new LinkedHashMap<>();
         response.put("status", "UP");
-        response.put("service", "AGRI NEXUS Backend");
+        response.put("service", "Kṣetravya / AGRI NEXUS Backend");
         return ResponseEntity.ok(response);
     }
 }
