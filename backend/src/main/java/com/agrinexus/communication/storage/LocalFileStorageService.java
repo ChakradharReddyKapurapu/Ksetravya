@@ -26,18 +26,22 @@ public class LocalFileStorageService implements FileStorageService {
     private final Path rootLocation;
 
     public LocalFileStorageService(@Value("${agrinexus.upload.dir:uploads/chat}") String uploadDir) {
-        this.rootLocation = Paths.get(uploadDir).toAbsolutePath().normalize();
-        init();
-    }
-
-    private void init() {
+        Path effectivePath;
         try {
-            Files.createDirectories(this.rootLocation);
-            log.info("Initialized LocalFileStorageService at location: {}", this.rootLocation);
-        } catch (IOException e) {
-            log.error("Could not initialize storage directory at {}", this.rootLocation, e);
-            throw new RuntimeException("Could not initialize file storage directory", e);
+            effectivePath = Paths.get(uploadDir).toAbsolutePath().normalize();
+            Files.createDirectories(effectivePath);
+            log.info("Initialized LocalFileStorageService at location: {}", effectivePath);
+        } catch (Exception e) {
+            log.warn("Could not create primary storage directory at '{}', falling back to system temp directory. Error: {}", uploadDir, e.getMessage());
+            effectivePath = Paths.get(System.getProperty("java.io.tmpdir"), "agrinexus", "uploads").toAbsolutePath().normalize();
+            try {
+                Files.createDirectories(effectivePath);
+                log.info("Initialized LocalFileStorageService at fallback location: {}", effectivePath);
+            } catch (Exception ex) {
+                log.error("Failed to create fallback storage directory at {}", effectivePath, ex);
+            }
         }
+        this.rootLocation = effectivePath;
     }
 
     @Override
