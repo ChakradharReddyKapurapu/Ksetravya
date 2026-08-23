@@ -46,7 +46,7 @@ export const setStoredUser = (user) => {
   }
 };
 
-async function request(endpoint, options = {}, retries = 3) {
+async function request(endpoint, options = {}, retries = 12) {
   const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
   
   const headers = {
@@ -87,12 +87,12 @@ async function request(endpoint, options = {}, retries = 3) {
     } catch (error) {
       const isNetworkError = error.name === 'TypeError' || (error.message && error.message.includes('Failed to fetch'));
       if (isNetworkError && attempt < retries) {
-        console.warn(`[apiClient] Network request failed for ${endpoint} (Attempt ${attempt + 1}/${retries}). Retrying while server wakes up...`);
+        console.warn(`[apiClient] Server spinning up (Attempt ${attempt + 1}/${retries}). Retrying request to ${endpoint}...`);
         await new Promise((resolve) => setTimeout(resolve, 3000));
         continue;
       }
       if (isNetworkError) {
-        throw new Error('Backend server is waking up from sleep. Please try again in 5 seconds.');
+        throw new Error('Connection timeout. Please click Create Account again.');
       }
       console.error(`API Request Error [${endpoint}]:`, error);
       throw error;
