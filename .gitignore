@@ -1,0 +1,22 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.log
+
+# Uploads directory for chat attachments and user media
+uploads/
+uploads/**
+
+# Maven target
+target/
+*.class
+
+# Node modules
+node_modules/
+dist/
+
+# IDE files
+.idea/
+*.iml
+.vscode/

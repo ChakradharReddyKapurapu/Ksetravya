@@ -1,0 +1,82 @@
+/* ==========================================================================
+   AGRI NEXUS — DESIGN SYSTEM TOKENS (PREMIUM GOLDEN-HOUR / NATURE + TECH)
+   ========================================================================== */
+
+:root {
+  /* Color Palette — Deep Greens & Forest */
+  --color-forest-950: #050e09;
+  --color-forest-900: #081a11;
+  --color-forest-800: #0f2c1e;
+  --color-forest-700: #15422e;
+  --color-forest-600: #1d5b3f;
+  
+  /* Emerald & Growth Accents */
+  --color-emerald-500: #22c55e;
+  --color-emerald-400: #4ade80;
+  --color-emerald-300: #86efac;
+  --color-emerald-glow: rgba(34, 197, 94, 0.4);
+
+  /* Earth & Clay / Warm Harvest */
+  --color-earth-900: #24170f;
+  --color-earth-700: #4a3424;
+  --color-earth-500: #8c6848;
+  --color-earth-300: #d4b494;
+
+  /* Golden Hour & Warm Sunrise Sunlight */
+  --color-sun-600: #d97706;
+  --color-sun-500: #f59e0b;
+  --color-sun-400: #fbbf24;
+  --color-sun-300: #fde68a;
+  --color-sun-glow: rgba(245, 158, 11, 0.45);
+  --color-golden-glow: rgba(251, 191, 36, 0.35);
+
+  /* River Azure & Atmospheric Sky */
+  --color-river-600: #0284c7;
+  --color-river-400: #38bdf8;
+  --color-river-200: #bae6fd;
+  --color-river-glow: rgba(56, 189, 248, 0.35);
+
+  /* Surface neutrals & Creams */
+  --color-cream-50: #fafaf5;
+  --color-cream-100: #f4f4eb;
+  --color-cream-200: #e5e6d6;
+  --color-slate-900: #090f0c;
+  --color-slate-800: #121c17;
+
+  /* Glassmorphism & UI Surfaces */
+  --glass-bg-base: rgba(8, 26, 17, 0.72);
+  --glass-bg-card: rgba(11, 34, 22, 0.65);
+  --glass-bg-hover: rgba(16, 48, 32, 0.8);
+  --glass-bg-weather: rgba(18, 22, 18, 0.75);
+  --glass-border-subtle: rgba(255, 255, 255, 0.1);
+  --glass-border-emerald: rgba(74, 222, 128, 0.35);
+  --glass-border-gold: rgba(251, 191, 36, 0.38);
+  --glass-blur: blur(20px);
+  --glass-blur-lg: blur(32px);
+
+  /* Typography */
+  --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Grotesk', monospace;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  /* Transitions & Timing */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 320ms;
+  --duration-slow: 600ms;
+
+  /* Elevation Shadows */
+  --shadow-elevation-1: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-elevation-2: 0 12px 36px -5px rgba(0, 0, 0, 0.55);
+  --shadow-elevation-3: 0 24px 50px -10px rgba(0, 0, 0, 0.7);
+  --shadow-glow-emerald: 0 0 35px -5px var(--color-emerald-glow);
+  --shadow-glow-sun: 0 0 40px -5px var(--color-sun-glow);
+}

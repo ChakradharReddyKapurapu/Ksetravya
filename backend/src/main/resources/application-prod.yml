@@ -1,0 +1,41 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate # NEVER auto-create in production! Use Flyway controlled migrations.
+    properties:
+      hibernate:
+        format_sql: false
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: never # Prevent sensitive environment leakage
+
+logging:
+  level:
+    root: INFO
+    com.agrinexus: INFO
+    org.hibernate: WARN
+
+agrinexus:
+  rate-limiting:
+    enabled: true
+

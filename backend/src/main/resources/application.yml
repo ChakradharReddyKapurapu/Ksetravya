@@ -1,0 +1,87 @@
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 100MB
+
+spring:
+  application:
+    name: agri-nexus-backend
+
+  flyway:
+    enabled: false
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://sql12.freesqldatabase.com:3306/sql12835816?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${DB_USERNAME:sql12835816}
+    password: ${DB_PASSWORD:Hd6DwHB4ed}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      max-lifetime: 60000
+      idle-timeout: 30000
+      validation-timeout: 3000
+      connection-test-query: SELECT 1
+      connection-timeout: 20000
+
+  sql:
+    init:
+      mode: never
+      continue-on-error: true
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+        type:
+          preferred_instant_jdbc_type: TIMESTAMP
+          preferred_datetime_jdbc_type: TIMESTAMP
+    open-in-view: false
+
+agrinexus:
+  rate-limiting:
+    enabled: ${RATE_LIMITING_ENABLED:false}
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+    expiration-ms: ${JWT_EXPIRATION:86400000} # 24 Hours
+  cors:
+    allowed-origins: ${FRONTEND_URL:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173}
+  upload:
+    dir: ${UPLOAD_DIR:uploads/chat}
+    max-image-size-bytes: 10485760 # 10 MB
+    max-file-size-bytes: 20971520 # 20 MB
+    max-attachments-per-message: 5
+  payment:
+    provider: ${PAYMENT_PROVIDER:mock} # mock or razorpay
+    key-id: ${PAYMENT_KEY_ID:rzp_test_agrinexus123}
+    key-secret: ${PAYMENT_KEY_SECRET:secret_agrinexus_key_456}
+    webhook-secret: ${PAYMENT_WEBHOOK_SECRET:whsec_agrinexus_789}
+    currency: ${PAYMENT_CURRENCY:INR}
+    platform-fee-percentage: 5.0 # 5% platform commission fee
+
+weather:
+  api-key: ${WEATHER_API_KEY:}
+  base-url: ${WEATHER_BASE_URL:https://api.open-meteo.com/v1/forecast}
+  provider: ${WEATHER_PROVIDER:open-meteo}
+  current-ttl-minutes: ${WEATHER_CURRENT_TTL_MINUTES:10}
+  forecast-ttl-minutes: ${WEATHER_FORECAST_TTL_MINUTES:30}
+
+market:
+  api-key: ${MARKET_API_KEY:}
+  base-url: ${MARKET_BASE_URL:https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070}
+  provider: ${MARKET_PROVIDER:database}
+  cache-ttl-minutes: ${MARKET_CACHE_TTL_MINUTES:15}
+
+logging:
+  level:
+    root: INFO
+    com.agrinexus: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: INFO
