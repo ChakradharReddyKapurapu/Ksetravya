@@ -46,7 +46,7 @@ export const setStoredUser = (user) => {
   }
 };
 
-async function request(endpoint, options = {}) {
+async function request(endpoint, options = {}, retries = 3) {
   const url = endpoint.startsWith('http') ? endpoint : `${BASE_URL}${endpoint}`;
   
   const headers = {
@@ -64,28 +64,39 @@ async function request(endpoint, options = {}) {
     headers,
   };
 
-  try {
-    const response = await fetch(url, config);
-    
-    // Handle 204 No Content
-    if (response.status === 204) {
-      return { success: true };
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, config);
+      
+      // Handle 204 No Content
+      if (response.status === 204) {
+        return { success: true };
+      }
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        const errorMessage = data.message || data.error || `HTTP error ${response.status}`;
+        const err = new Error(errorMessage);
+        err.status = response.status;
+        err.data = data;
+        throw err;
+      }
+
+      return data;
+    } catch (error) {
+      const isNetworkError = error.name === 'TypeError' || (error.message && error.message.includes('Failed to fetch'));
+      if (isNetworkError && attempt < retries) {
+        console.warn(`[apiClient] Network request failed for ${endpoint} (Attempt ${attempt + 1}/${retries}). Retrying while server wakes up...`);
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        continue;
+      }
+      if (isNetworkError) {
+        throw new Error('Backend server is waking up from sleep. Please try again in 5 seconds.');
+      }
+      console.error(`API Request Error [${endpoint}]:`, error);
+      throw error;
     }
-
-    const data = await response.json().catch(() => ({}));
-
-    if (!response.ok) {
-      const errorMessage = data.message || data.error || `HTTP error ${response.status}`;
-      const err = new Error(errorMessage);
-      err.status = response.status;
-      err.data = data;
-      throw err;
-    }
-
-    return data;
-  } catch (error) {
-    console.error(`API Request Error [${endpoint}]:`, error);
-    throw error;
   }
 }
 

@@ -25,21 +25,9 @@ public class CorsConfig {
                 .filter(s -> !s.isEmpty())
                 .toList();
 
-        if (origins.contains("*")) {
-            configuration.addAllowedOriginPattern("*");
-        } else {
-            for (String origin : origins) {
-                configuration.addAllowedOriginPattern(origin);
-            }
-            configuration.addAllowedOriginPattern("http://localhost:*");
-            configuration.addAllowedOriginPattern("http://127.0.0.1:*");
-            configuration.addAllowedOriginPattern("https://*.onrender.com");
-            configuration.addAllowedOriginPattern("https://*.vercel.app");
-            configuration.addAllowedOriginPattern("https://*.netlify.app");
-        }
-
+        configuration.addAllowedOriginPattern("*");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setExposedHeaders(Arrays.asList("Authorization", "Link", "X-Total-Count"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
@@ -47,5 +35,10 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public org.springframework.web.filter.CorsFilter corsFilter() {
+        return new org.springframework.web.filter.CorsFilter(corsConfigurationSource());
     }
 }
