@@ -85,3 +85,5 @@ logging:
     com.agrinexus: DEBUG
     org.springframework.security: INFO
     org.hibernate.SQL: INFO
+    org.hibernate.dialect.Dialect: ERROR
+    org.hibernate.orm.incubating: ERROR
