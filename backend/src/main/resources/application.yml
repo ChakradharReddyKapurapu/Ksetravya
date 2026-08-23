@@ -84,7 +84,6 @@ logging:
     root: INFO
     com.agrinexus: DEBUG
     org.springframework.security: INFO
+    org.hibernate: ERROR
     org.hibernate.SQL: INFO
-    org.hibernate.dialect.Dialect: ERROR
-    org.hibernate.orm.incubating: ERROR
     org.springframework.security.config.annotation.authentication.configuration: ERROR
